@@ -120,7 +120,7 @@ class Upload {
 	 * @return Upload 
 	 */
 	public static function factory($destination) {
-
+		
 		return new Upload($destination);
 		
 	}
@@ -252,15 +252,18 @@ class Upload {
 	 * Set data about file
 	 */
 	protected function set_file_data() {
-
+		
+		$file_size = $this->get_file_size();
+		
 		$this->file = array(
-			'status'		=> false,
-			'destination'		=> $this->destination,
-			'size'			=> $this->get_file_size(),
-			'mime'			=> $this->get_file_mime(),
-			'original_filename'	=> $this->file_post['name'],
-			'tmp_name'		=> $this->file_post['tmp_name'],
-			'post_data'		=> $this->file_post,
+			'status'				=> false,
+			'destination'			=> $this->destination,
+			'size_in_bytes'			=> $file_size,
+			'size_in_mb'			=> $this->bytes_to_mb($file_size),
+			'mime'					=> $this->get_file_mime(),
+			'original_filename'		=> $this->file_post['name'],
+			'tmp_name'				=> $this->file_post['tmp_name'],
+			'post_data'				=> $this->file_post,
 		);
 		
 	}
@@ -397,7 +400,9 @@ class Upload {
 		
 		if (!empty($object->max_file_size)) {
 			
-			if ($object->max_file_size <= $object->file['size']) {
+			$file_size_in_mb = $this->bytes_to_mb($object->file['size_in_bytes']);
+			
+			if ($object->max_file_size <= $file_size_in_mb) {
 				
 				$object->set_error('File is too big.');
 				
@@ -493,7 +498,7 @@ class Upload {
 	 * @return int
 	 */
 	protected function get_file_size() {
-		
+
 		return filesize($this->tmp_name);
 		
 	}
@@ -547,6 +552,19 @@ class Upload {
 	protected function create_new_filename() {
 		
 		$this->filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time();
+		
+	}
+	
+	
+	/**
+	 * Convert bytes to mb.
+	 *  
+	 * @param int $bytes
+	 * @return int
+	 */
+	protected function bytes_to_mb($bytes) {
+		
+		return round(($bytes / 1048576), 2);
 		
 	}
 	
