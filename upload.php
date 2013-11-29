@@ -156,7 +156,9 @@ class Upload {
 	 *  
 	 * @return array
 	 */
-	public function upload() {
+	public function upload($filename = '') {
+		
+		$this->filename = $filename;
 		
 		if ($this->check()) {
 			
@@ -227,7 +229,9 @@ class Upload {
 	protected function save_file() {
 		
 		//create & set new filename
-		$this->create_new_filename();
+		if( $this->filename == '' ){
+			$this->create_new_filename();
+		}
 		
 		//set filename
 		$this->file['filename']	= $this->filename;
