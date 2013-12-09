@@ -148,6 +148,16 @@ class Upload {
 		
 	}
 	
+	/**
+	 * Set target filename
+	 * 
+	 * @param string $filename
+	 */
+	public function set_filename($filename) {
+		
+		$this->filename = $filename;
+		
+	}
 	
 	/**
 	 * Check & Save file
@@ -157,9 +167,7 @@ class Upload {
 	 * @return array
 	 */
 	public function upload($filename = '') {
-		
-		$this->filename = $filename;
-		
+
 		if ($this->check()) {
 			
 			$this->save();
@@ -229,7 +237,7 @@ class Upload {
 	protected function save_file() {
 		
 		//create & set new filename
-		if( $this->filename == '' ){
+		if(empty($this->filename)){
 			$this->create_new_filename();
 		}
 		
@@ -555,7 +563,8 @@ class Upload {
 	 */
 	protected function create_new_filename() {
 		
-		$this->filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time();
+		$filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time();
+		$this->set_filename($filename);
 		
 	}
 	
