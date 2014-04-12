@@ -12,7 +12,7 @@ class Upload {
 	/**
 	 * Default directory persmissions (destination dir)
 	 */
-	const DEFAULT_DIR_PERMISSIONS = 750;
+	protected $default_permissions = 750;
 
 	
 	/**
@@ -110,6 +110,12 @@ class Upload {
 	 */
 	private $callbacks = array();
 	
+	/**
+	 * Root dir
+	 *
+	 * @var string
+	 */
+	protected $root;
 	
 	/**
 	 * Return upload object
@@ -130,12 +136,19 @@ class Upload {
 	 *  Define ROOT constant and set & create destination path
 	 * 
 	 * @param string $destination 
+	 * @param string $root
 	 */
-	public function __construct($destination) {
+	public function __construct($destination, $root = false) {
 
-		// define document root constant
-		define('ROOT', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR);
+		if ($root) {
 
+			$this->root = $root;
+
+		} else {
+			
+			$this->root = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR;
+		}
+		
 		// set & create destination path
 		if (!$this->set_destination($destination)) {
 			
@@ -551,7 +564,7 @@ class Upload {
 	 */
 	protected function create_destination() {
 		
-		return mkdir(ROOT . $this->destination, self::DEFAULT_DIR_PERMISSIONS, true);
+		return mkdir($this->root . $this->destination, $this->default_permissions, true);
 		
 	}
 	
