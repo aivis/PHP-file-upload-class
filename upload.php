@@ -123,11 +123,12 @@ class Upload {
 	 * $destination		= 'path/to/your/file/destination/folder';
 	 * 
 	 * @param string $destination
+	 * @param string $root
 	 * @return Upload 
 	 */
-	public static function factory($destination) {
+	public static function factory($destination, $root = false) {
 		
-		return new Upload($destination);
+		return new Upload($destination, $root);
 		
 	}
 	
