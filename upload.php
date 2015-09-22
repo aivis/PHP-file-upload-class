@@ -553,7 +553,7 @@ class Upload {
 	 */
 	protected function destination_exist() {
 
-		return is_writable($this->destination);
+		return is_writable($this->root . $this->destination);
 
 	}
 
