@@ -180,7 +180,13 @@ class Upload {
 	 *
 	 * @return array
 	 */
-	public function upload($filename = '') {
+	public function upload($filename = false) {
+
+		if( $filename ) {
+
+			$this->set_filename($filename);
+
+		}
 
 		if ($this->check()) {
 
