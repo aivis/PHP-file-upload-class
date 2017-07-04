@@ -182,6 +182,8 @@ class Upload {
 	 */
 	public function upload($filename = '') {
 
+		$this->set_filename($filename);
+		
 		if ($this->check()) {
 
 			$this->save();
@@ -260,7 +262,7 @@ class Upload {
 
 		//set full path
 		$this->file['full_path'] = $this->root . $this->destination . $this->filename;
-        $this->file['path'] = $this->destination . $this->filename;
+        	$this->file['path'] = $this->destination . $this->filename;
 
 		$status = move_uploaded_file($this->tmp_name, $this->file['full_path']);
 
