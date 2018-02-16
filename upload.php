@@ -122,7 +122,7 @@ class Upload {
 	 *
 	 * @var boolean
 	 */
-	public $enable_extension;
+	public $enable_extension = true;
 
 	/**
 	 * Return upload object
@@ -190,7 +190,7 @@ class Upload {
 	public function upload($filename = '') {
 
 		$this->set_filename($filename);
-		
+
 		if ($this->check()) {
 
 			$this->save();
