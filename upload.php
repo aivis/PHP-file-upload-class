@@ -118,6 +118,13 @@ class Upload {
 	protected $root;
 
 	/**
+	 * Add the extension to the filename (true/false)
+	 *
+	 * @var boolean
+	 */
+	public $enable_extension = true;
+
+	/**
 	 * Return upload object
 	 *
 	 * $destination		= 'path/to/your/file/destination/folder';
@@ -183,7 +190,7 @@ class Upload {
 	public function upload($filename = '') {
 
 		$this->set_filename($filename);
-		
+
 		if ($this->check()) {
 
 			$this->save();
@@ -579,8 +586,11 @@ class Upload {
 	 * @return string
 	 */
 	protected function create_new_filename() {
-
-		$filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time();
+		if($this->enable_extension)
+		{
+			$ext = ".". pathinfo($this->file['original_filename'], PATHINFO_EXTENSION);
+		}
+		$filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time(). $ext;
 		$this->set_filename($filename);
 
 	}
