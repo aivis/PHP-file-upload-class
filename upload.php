@@ -20,7 +20,7 @@ class Upload {
 	 *
 	 * @var array
 	 */
-	protected $files_post = array();
+	protected $file_post = array();
 
 
 	/**
@@ -66,7 +66,7 @@ class Upload {
 	/**
 	 * External callback object
 	 *
-	 * @var obejct
+	 * @var object
 	 */
 	protected $external_callback_object;
 
@@ -394,7 +394,7 @@ class Upload {
 	/**
 	 * File mime type validation callback
 	 *
-	 * @param obejct $object
+	 * @param object $object
 	 */
 	protected function check_mime_type($object) {
 
